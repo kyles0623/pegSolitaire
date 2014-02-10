@@ -42,7 +42,6 @@ int main()
 
 //	sf::Clock Clock;
 //
-	sf::Time time;
 
 	while(found != 0)
 	{

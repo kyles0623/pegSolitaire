@@ -12,44 +12,8 @@ PGraph::PGraph(void)
 
 
 
-void PGraph::AddEdge(PegTable *from, PegTable *to, double cost)
-{
-	hash_map<PegTable*,hash_map<PegTable*,double>>::iterator iter = gData.find(from);
 
-	if(iter==gData.end())
-	{
-		hash_map<PegTable*,double> edges;
-		edges[to] = cost;
-		gData[from] = edges;
-	}
-	else
-	{
-		iter->second[to] = cost;
-	}
 
-	iter = gData.find(to);
-
-	if(iter==gData.end())
-	{
-		hash_map<PegTable*,double> edges;
-		gData[to] = edges;
-	}
-	
-
-}
-
-hash_map<PegTable*,double> & PGraph::getAdjacents(PegTable *src)
-{
-	hash_map<PegTable*,hash_map<PegTable*,double>>::iterator iter = gData.find(src);
-
-	if(iter == gData.end())
-	{
-		emptyMap.clear();
-		return emptyMap;
-
-	}
-	return iter->second;
-}
 
 
 //Breadth First Search for Triangle Solitaire

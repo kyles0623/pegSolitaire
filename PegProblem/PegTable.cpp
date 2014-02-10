@@ -10,18 +10,20 @@ PegTable::PegTable(void)
 
 PegTable::PegTable(const int level, const string &config)
 {
-	//Level 
+	
 	this->level = level;
 	this->size = (level*(level+1))/2;
 	this->Table = std::vector<bool>(size,true);
 	this->numPegs = size;
 	this->SetConfiguration(config);
-	this->TableValue = this->GenerateBitsValue();
 	this->parent = 0; 
 	this->lastMove.index = -1;
 	this->lastMove.jumpedFrom = -1;
 	this->lastMove.jumpedOver = -1;
 }
+
+//Set's string configuration for entire board
+//String can be longer than board but not shorter
 void PegTable::SetConfiguration(const string &config)
 {
 	if(this->size > config.size())
@@ -47,54 +49,12 @@ PegTable::PegTable(const PegTable &copy)
 	this->size = copy.size;
 	this->Table = copy.Table;
 	this->numPegs = copy.numPegs;
-	this->TableValue = copy.TableValue;
 	this->parent = 0;
 
-}
-bool PegTable::isSolvable()
-{
-	int x1 = 0, x2 = 0, x3 = 0;
-	
-	for(int i=0;i<this->level;i++)
-	{
-		for(int j=0;j<=i;j++)
-		{
-			bool t = this->Table[(((i+1)*i)/2)+j];
-			if(t){
-				switch(((i+j)%3)+1){
-				case 1:
-					x1++;
-					break;
-				case 2:
-					x2++;
-					break;
-				case 3:
-					x3++;
-					break;
-				}
-			}
-		}
-	}
-
-	if(x1==x2 && x1==x3)
-		return false;
-	else
-		return true;
 }
 bool PegTable::operator==(PegTable &compare)
 {
 	return this->Table == compare.Table;
-}
-bool PegTable::isSolved(const int &level,const int &number)
-{
-	if(this->numPegs != 1)
-		return false;
-
-	if(this->Table[((level*(level+1)/2) + number)])
-		return true;
-
-	return false;
-
 }
 bool PegTable::getValue(const int level, const int number)
 {
@@ -140,9 +100,6 @@ void PegTable::JumpTo(const int level, const int number, const int jumpFromDirec
 	jumpOverIndex = getJumpOverIndex(index,jumpFromDirection,level);
 
 
-	this->TableValue |= 1 << index;
-	this->TableValue &= ~(1<<jumpFromIndex);
-	this->TableValue &= ~(1<<jumpOverIndex);
 
 	this->Table[index] = true;
 	this->Table[jumpFromIndex] = false;
@@ -153,6 +110,8 @@ void PegTable::JumpTo(const int level, const int number, const int jumpFromDirec
 	this->lastMove.jumpedOver = jumpOverIndex;
 	this->numPegs--;
 }
+
+//Caculate jump over index
 int PegTable::getJumpOverIndex(const int &index, const int &jumpDir, const int &level)
 {
 	int jumpOverIndex;
@@ -180,6 +139,8 @@ int PegTable::getJumpOverIndex(const int &index, const int &jumpDir, const int &
 		return jumpOverIndex;
 
 }
+
+//Calculate jumpindex
 int PegTable::getJumpFromIndex(const int &index, const int &jumpDir, const int &level)
 {
 	int jumpFromIndex;
@@ -282,6 +243,7 @@ bool PegTable::CanJumpTo (const int level, const int number, const int jumpFromD
 		
 		break;
 	case 3:
+		//false if index is close to right side of board
 		if(index > ((level+2)*(level+1))/2 - 3)
 			return false;
 
@@ -290,7 +252,10 @@ bool PegTable::CanJumpTo (const int level, const int number, const int jumpFromD
 
 		
 		break;
+
+
 	case 4:
+		//
 		jumpFromIndex = index + ((2*(level+1)) + 1);
 		jumpOverIndex = index + level + 1;
 		break;
@@ -311,7 +276,6 @@ bool PegTable::CanJumpTo (const int level, const int number, const int jumpFromD
 vector<bool> PegTable::getChangedValue(const int lev, const int number, const int jumpFromDirection)
 {
 	vector<bool> ret = this->Table;
-	unsigned long long int temp = this->TableValue;
 	int in;
 
 	if(lev == 0)
@@ -328,21 +292,10 @@ vector<bool> PegTable::getChangedValue(const int lev, const int number, const in
 	return ret;
 
 }
-unsigned long long int PegTable::GenerateBitsValue()
-{
-	
-    unsigned long long int retval = 0;
-    int i =0;
-    for (std::vector<bool>::iterator it = this->Table.begin() ; it != Table.end(); it++,i++){
-        if(*it){
-            retval |= 1<<i;
-        }
-    
-   
-	}
-	return retval;
-}
 
+//
+
+//Print Table Terminal
 void PegTable::Print()
 {
 
@@ -361,6 +314,9 @@ void PegTable::Print()
 	}
 }
 
+
+//Visualization using SFML Libraries
+//Afterwards removed 
 /*
 void PegTable::Draw(sf::RenderWindow &window, PegTable *last)
 {

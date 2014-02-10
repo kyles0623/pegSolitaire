@@ -27,15 +27,11 @@ public:
 	int getJumpFromIndex(const int &index, const int &jumpDir, const int &level);
 	bool isSolvable();
 	bool isSolved(const int &level,const int &number);
-	unsigned long long int GenerateBitsValue();
 	int getLevel(const int index);
 	void Print();
 	int level;
 	int numPegs;
 	
-	unsigned long long int TableValue;
-	std::vector<int> solvableValues;
-	std::vector<int> Blanks;
 	std::string last_move;
 	std::vector<bool> Table;
 	~PegTable(void);
