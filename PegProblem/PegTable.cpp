@@ -361,7 +361,7 @@ void PegTable::Print()
 	}
 }
 
-
+/*
 void PegTable::Draw(sf::RenderWindow &window, PegTable *last)
 {
 	static const int init_x = 100,init_y = 100;
@@ -421,6 +421,7 @@ void PegTable::Draw(sf::RenderWindow &window, PegTable *last)
 	}
 
 }
+*/
 PegTable::~PegTable(void)
 {
 

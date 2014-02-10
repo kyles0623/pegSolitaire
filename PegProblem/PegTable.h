@@ -1,7 +1,6 @@
 #pragma once
 #include<vector>
 #include<string>
-#include<SFML\Graphics.hpp>
 
 using namespace std;
 
@@ -30,7 +29,6 @@ public:
 	bool isSolved(const int &level,const int &number);
 	unsigned long long int GenerateBitsValue();
 	int getLevel(const int index);
-	void Draw(sf::RenderWindow &window, PegTable *next);
 	void Print();
 	int level;
 	int numPegs;

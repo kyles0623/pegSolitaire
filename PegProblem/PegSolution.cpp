@@ -1,6 +1,5 @@
 #include "PegTable.h"
 #include "PGraph.h"
-#include<SFML\Graphics.hpp>
 #include <time.h>
 #include<iostream>
 
@@ -41,7 +40,8 @@ int main()
 		return 0;
 	}
 
-	sf::Clock Clock;
+//	sf::Clock Clock;
+//
 	sf::Time time;
 
 	while(found != 0)
@@ -58,33 +58,6 @@ int main()
 		stac.pop();
 		found->Print();
 	}
-	
-	/*
-	sf::VideoMode videoMode(1280,720);
-	sf::RenderWindow window(videoMode,"KeyEvent Window");
 
-	stack<PegTable*> stac_iter = stac;
-	float elapsed = 3000;
-	float elapser = 0;
-	while(window.isOpen())
-	{
-		time = Clock.getElapsedTime();
-
-		if(time.asMilliseconds() > elapser ){
-
-			if(stac_iter.empty())
-				stac_iter = stac;
-
-			found = stac_iter.top();
-			stac_iter.pop();
-
-			window.clear();
-			found->Draw(window,stac_iter.top());
-			window.display();
-			Clock.restart();
-			elapser = elapsed;
-		} 
-	}
-	*/
 	return 0;
 }
